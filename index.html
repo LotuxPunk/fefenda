@@ -135,91 +135,44 @@
 
 </body>
 <script>
-    (function () {
-        const second = 1000,
-            minute = second * 60,
-            hour = minute * 60,
-            day = hour * 24;
+    // Function that take a date and return the difference between the given date and the current date
+    function getTimeRemaining(startTime) {
+        var t = Date.parse(new Date()) - Date.parse(startTime);
+        var seconds = Math.floor((t / 1000) % 60);
+        var minutes = Math.floor((t / 1000 / 60) % 60);
+        var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+        var days = Math.floor(t / (1000 * 60 * 60 * 24));
+        return {
+            'total': t,
+            'days': days,
+            'hours': hours,
+            'minutes': minutes,
+            'seconds': seconds
+        };
+    }
 
-        let today = new Date(),
-            dd = String(today.getDate()).padStart(2, "0"),
-            mm = String(today.getMonth() + 1).padStart(2, "0"),
-            yyyy = today.getFullYear(),
-            nextYear = yyyy + 1,
-            ndaMeeting = "01/28/2022";
-        today = mm + "/" + dd + "/" + yyyy;
-        //end
+    function updateCountdown(days, hours, minutes, seconds, values){
+        days.innerText = values.days;
+        hours.innerText = values.hours;
+        minutes.innerText = values.minutes;
+        seconds.innerText = values.seconds;
+    }
 
-        const countDown = new Date(ndaMeeting).getTime(),
-            x = setInterval(function () {
+    const ndaMeeting = "01/28/2022";
+    const jonAnswer = "03/22/2022";
+    const andyAnswer = "03/22/2022 18:58:00";
 
-                const now = new Date().getTime(),
-                    distance = countDown - now;
+    (function(){
+        setInterval(function(){
+            const nda = getTimeRemaining(ndaMeeting);
+            const jon = getTimeRemaining(jonAnswer);
+            const andy = getTimeRemaining(andyAnswer);
 
-                    document.getElementById("days").innerText = Math.floor(-distance / (day)),
-                    document.getElementById("hours").innerText = Math.floor((-distance % (day)) / (hour)),
-                    document.getElementById("minutes").innerText = Math.floor((-distance % (hour)) / (minute)),
-                    document.getElementById("seconds").innerText = Math.floor((-distance % (minute)) / second);
-            }, 0)
-    }());
-
-    (function () {
-        const second = 1000,
-            minute = second * 60,
-            hour = minute * 60,
-            day = hour * 24;
-
-        let today = new Date(),
-            dd = String(today.getDate()).padStart(2, "0"),
-            mm = String(today.getMonth() + 1).padStart(2, "0"),
-            yyyy = today.getFullYear(),
-            nextYear = yyyy + 1,
-            jonAnswer = "03/22/2022";
-
-        today = mm + "/" + dd + "/" + yyyy;
-        //end
-
-        const countDown = new Date(jonAnswer).getTime(),
-            x = setInterval(function () {
-
-                const now = new Date().getTime(),
-                    distance = countDown - now;
-
-                    document.getElementById("daysJon").innerText = Math.floor(-distance / (day)),
-                    document.getElementById("hoursJon").innerText = Math.floor((-distance % (day)) / (hour)),
-                    document.getElementById("minutesJon").innerText = Math.floor((-distance % (hour)) / (minute)),
-                    document.getElementById("secondsJon").innerText = Math.floor((-distance % (minute)) / second);
-            }, 0)
-    }());
-
-    (function () {
-        const second = 1000,
-            minute = second * 60,
-            hour = minute * 60,
-            day = hour * 24;
-
-        let today = new Date(),
-            dd = String(today.getDate()).padStart(2, "0"),
-            mm = String(today.getMonth() + 1).padStart(2, "0"),
-            yyyy = today.getFullYear(),
-            nextYear = yyyy + 1,
-            andyAnswer = "03/22/2022 18:58:00";
-
-        today = mm + "/" + dd + "/" + yyyy;
-        //end
-
-        const countDown = new Date(andyAnswer).getTime(),
-            x = setInterval(function () {
-
-                const now = new Date().getTime(),
-                    distance = countDown - now;
-
-                    document.getElementById("daysAndy").innerText = Math.floor(-distance / (day)),
-                    document.getElementById("hoursAndy").innerText = Math.floor((-distance % (day)) / (hour)),
-                    document.getElementById("minutesAndy").innerText = Math.floor((-distance % (hour)) / (minute)),
-                    document.getElementById("secondsAndy").innerText = Math.floor((-distance % (minute)) / second);
-            }, 0)
-    }());
+            updateCountdown(document.getElementById("days"), document.getElementById("hours"), document.getElementById("minutes"), document.getElementById("seconds"), nda);
+            updateCountdown(document.getElementById("daysJon"), document.getElementById("hoursJon"), document.getElementById("minutesJon"), document.getElementById("secondsJon"), jon);
+            updateCountdown(document.getElementById("daysAndy"), document.getElementById("hoursAndy"), document.getElementById("minutesAndy"), document.getElementById("secondsAndy"), andy);
+        },0)
+    })();
 </script>
 
 </html>
