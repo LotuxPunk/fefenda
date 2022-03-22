@@ -26,7 +26,7 @@
         body {
             align-items: center;
             background-color: #e59b20;
-            display: flex;
+            display: flexbox;
             font-family: -apple-system,
                 BlinkMacSystemFont,
                 "Segoe UI",
@@ -43,7 +43,8 @@
             margin: 0 auto;
             text-align: center;
             padding: 5px;
-            border: #333 solid 1px;
+            border-bottom: #333 solid 1px;
+            display: flexbox;
         }
 
         h1 {
@@ -118,6 +119,20 @@
         </div>
     </div>
 
+    <br/>
+
+    <div class="container">
+        <h1 id="headline">Days since @andybelford answered</h1>
+        <div id="countdown">
+            <ul>
+                <li><span id="daysAndy"></span>days</li>
+                <li><span id="hoursAndy"></span>Hours</li>
+                <li><span id="minutesAndy"></span>Minutes</li>
+                <li><span id="secondsAndy"></span>Seconds</li>
+            </ul>
+        </div>
+    </div>
+
 </body>
 <script>
     (function () {
@@ -174,6 +189,35 @@
                     document.getElementById("hoursJon").innerText = Math.floor((-distance % (day)) / (hour)),
                     document.getElementById("minutesJon").innerText = Math.floor((-distance % (hour)) / (minute)),
                     document.getElementById("secondsJon").innerText = Math.floor((-distance % (minute)) / second);
+            }, 0)
+    }());
+
+    (function () {
+        const second = 1000,
+            minute = second * 60,
+            hour = minute * 60,
+            day = hour * 24;
+
+        let today = new Date(),
+            dd = String(today.getDate()).padStart(2, "0"),
+            mm = String(today.getMonth() + 1).padStart(2, "0"),
+            yyyy = today.getFullYear(),
+            nextYear = yyyy + 1,
+            andyAnswer = "03/22/2022 18:58:00";
+
+        today = mm + "/" + dd + "/" + yyyy;
+        //end
+
+        const countDown = new Date(andyAnswer).getTime(),
+            x = setInterval(function () {
+
+                const now = new Date().getTime(),
+                    distance = countDown - now;
+
+                    document.getElementById("daysAndy").innerText = Math.floor(-distance / (day)),
+                    document.getElementById("hoursAndy").innerText = Math.floor((-distance % (day)) / (hour)),
+                    document.getElementById("minutesAndy").innerText = Math.floor((-distance % (hour)) / (minute)),
+                    document.getElementById("secondsAndy").innerText = Math.floor((-distance % (minute)) / second);
             }, 0)
     }());
 </script>
